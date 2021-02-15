@@ -10,7 +10,7 @@ app.use(express.json());
 
 app.use("/api", router);
 
-export const server = app.listen(process.env.PORT || 3000, () => {
+export const server = app.listen(process.env.PORT || 9000, () => {
   if (server) {
     const address = server.address() as AddressInfo;
     console.log(`Server running: http://localhost:${address.port}`);
