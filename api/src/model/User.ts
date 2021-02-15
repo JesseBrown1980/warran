@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document } from 'mongoose';
-import { Encrypter } from '../service/Encrypter';
+import { Encrypter } from '../service/encrypter';
 
 
 export const UserSchema: Schema = new Schema({
