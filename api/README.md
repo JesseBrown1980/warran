@@ -61,7 +61,8 @@ The body of the resquest must be:
 
 ```
 <br>
-**`POST /wallet`** This is a generic endpoint to handle the user transactions. The transaction `category` must be `deposit`, `payment` or `withdrawl`.
+
+**`POST /wallet` ** This is a generic endpoint to handle the user transactions. The transaction `category` must be `deposit`, `payment` or `withdrawl`.
 
 ```
 {
@@ -74,6 +75,7 @@ The body of the resquest must be:
 
 
 <br>
+
 **`GET /wallet/{id}`** This endpoint returns the user statement from it's `id`. Also it must be provided the _query parameters_ `limit`,`skip` and `order_by` for the pagination.  
 
 
