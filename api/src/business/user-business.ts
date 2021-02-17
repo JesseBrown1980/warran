@@ -1,36 +1,47 @@
 import { UserDatabase } from "../data/user-database";
 import { MissingParameterError } from "../error";
 import { InvalidParameterError } from "../error/invalid-parameter.error";
-import { emailIsValid } from '../utils'
+import { UserInputDTO, UserModel } from "../model";
+import { created, noContent, ok } from "../protocols";
+import { emailIsValid, idIsValid } from '../utils'
 
 export class UserBusiness {
   userDatabase: UserDatabase;
   constructor(userDatabase: UserDatabase) {
     this.userDatabase = userDatabase;
-   }
+  }
 
-  async createUser(user: any) {
-    try {
+  async createUser(user: UserInputDTO) {
 
-      const requiredFields = ['email', 'password', 'name']
-      for (const field of requiredFields) {
-        if (!user[field]) {
-          return new MissingParameterError(field)
-        }
-      }
+    const { email, password, name } = user
 
-      const { email } = user
+    const validEmail: boolean = emailIsValid(email)
 
-      const validEmail: boolean = emailIsValid(email)
-
-      if (!validEmail) {
-        return new InvalidParameterError("email")
-      }
-
-      await this.userDatabase.createUser(user)
-    } catch (error) {
-      throw new Error(error.message)
+    if (!validEmail) {
+      return new InvalidParameterError("email")
     }
+
+    const newUser = await this.userDatabase.createUser(name, password, email)
+    return created(newUser)
+  }
+
+  async getUsers() {
+
+    const users = await this.userDatabase.getUsers()
+    return ok(users)
+  }
+
+  async getUserById(id: string) {
+
+    const validId = idIsValid(id)
+
+    if (!validId) {
+
+      throw new InvalidParameterError('id')
+    }
+
+    const user = await this.userDatabase.getUserById(id)
+    return ok(user)
   }
 
 }

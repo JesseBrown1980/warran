@@ -26,7 +26,7 @@ export const StatementSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User',
     required: true,
-  }  
+  }
 });
 
 
@@ -46,6 +46,14 @@ export const stringToTransactionType = (input: string) => {
 export interface TransactionInputDTO {
   amount: number;
   category: TransactionType;
+  user_id: string;
 }
 
 export const StatementModel = mongoose.model('statements', StatementSchema);
+
+export type User = {
+  amout: number,
+  category: TransactionType,
+  balance: number,
+  created_at: Date,
+}

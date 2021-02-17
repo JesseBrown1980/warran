@@ -2,7 +2,7 @@ import mongoose, { Connection} from "mongoose";
 
 export abstract class BaseDatabase {
   public getConnection = async (): Promise<Connection> => {
-    await mongoose.connect(`${process.env.DB_DOCKER}`, {
+    await mongoose.connect(`${process.env.DB_CLOUD}`, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });

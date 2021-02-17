@@ -1,20 +1,20 @@
-import { StatementModel, TransactionInputDTO } from "../model/statement";
+import { StatementModel, TransactionInputDTO, TransactionType } from "../model/statement";
 import { BaseDatabase } from "./base-database";
 
 export class WalletDatabase extends BaseDatabase {
 
-  saveTransaction = async (transaction: TransactionInputDTO) => {
+  saveTransaction = async (user_id: string, amount: number, category: TransactionType) => {
     try {
       await this.getConnection()
       new StatementModel({
-        transaction
+        user_id, amount, category
       }).save()
     } catch (error) {
       throw new Error(error.message)
     }
   }
 
-  getStatement = async (user_id: string, skip: number, limit: number, order_by: string) => {
+  getStatement = async (user_id: string, skip: number, limit: number, order_by: number) => {
     try {
       await this.getConnection()
       return await StatementModel.find({ user_id })
@@ -27,4 +27,6 @@ export class WalletDatabase extends BaseDatabase {
       throw new Error(error.message)
     }
   }
+
+
 }

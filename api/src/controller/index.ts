@@ -1,4 +1,2 @@
-import { Request, Response } from "express";
-
-export class Controller {
-}
+export * from './wallet-controller'
+export * from './user-controller'

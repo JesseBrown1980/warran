@@ -3,13 +3,14 @@ import { BaseDatabase } from "./base-database";
 
 export class UserDatabase extends BaseDatabase {
 
-  createUser = async (user: UserInputDTO) => {
+  createUser = async (name: string, password: string, email: string) => {
     try {
       await this.getConnection()
-      new UserModel({
-        user
+      await new UserModel({
+        name, password, email
       }).save()
     } catch (error) {
+      console.log(error)
       throw new Error(error.message)
     }
   }
@@ -18,6 +19,33 @@ export class UserDatabase extends BaseDatabase {
     try {
       await this.getConnection()
       return await UserModel.findOne({ email }).exec()
+    } catch (error) {
+      throw new Error(error.message)
+    }
+  }
+
+  getUsers = async () => {
+    try {
+      await this.getConnection()
+      return await UserModel.find({}).exec()
+    } catch (error) {
+      throw new Error(error.message)
+    }
+  }
+
+  getUserById = async (id: string) => {
+    try {
+      await this.getConnection()
+      return await UserModel.findById(id).exec()
+    } catch (error) {
+      throw new Error(error.message)
+    }
+  }
+
+  updateBalance = async (id: string, newBalance: number) => {
+    try {
+      await this.getConnection()
+      return await UserModel.findByIdAndUpdate(id, { balance: newBalance })
     } catch (error) {
       throw new Error(error.message)
     }
