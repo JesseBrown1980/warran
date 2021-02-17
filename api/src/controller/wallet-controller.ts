@@ -9,7 +9,9 @@ export class WalletController {
     try {
       const user_id = req.params.user_id
 
-      const { limit, skip, order_by } = req.query as any;
+      const skip = Number(req.query.skip)
+      const limit = Number(req.query.limit)
+      const order_by = Number(req.query.order_by)
 
       const walletDatabase = new WalletDatabase()
       const userDatabase = new UserDatabase()

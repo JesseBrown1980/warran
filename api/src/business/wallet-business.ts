@@ -16,7 +16,7 @@ export class WalletBusiness {
   }
 
 
-  async getStatement(user_id: string, skip: number, limit: 10, order_by: number) {
+  async getStatement(user_id: string, skip: number, limit: number, order_by: number) {
 
     if (!user_id) {
       return new MissingParameterError('user_id')
@@ -28,7 +28,7 @@ export class WalletBusiness {
       return new InvalidParameterError('user_id')
     }
 
-    const userExists = UserModel.findById({ id: user_id })
+    const userExists = await this.userDatabase.getUserById(user_id)
 
     if (!userExists) {
       return new NotFoundError()

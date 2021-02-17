@@ -5,5 +5,5 @@ export const walletRouter = express.Router()
 const controller = new WalletController()
 
 
-walletRouter.get('/:userId', controller.getStatement);
+walletRouter.get('/:user_id', controller.getStatement);
 walletRouter.post('/', controller.handleTransaction);
