@@ -65,6 +65,12 @@ export class WalletBusiness {
       return new NotFoundError()
     }
 
+    const categories = [TransactionType.PAYMENT, TransactionType.WITHDRAWL, TransactionType.DEPOSIT]
+
+    if (categories.indexOf(category) < 1) {
+      return new InvalidParameterError('category')
+    }
+
     if ((category === TransactionType.PAYMENT || category === TransactionType.WITHDRAWL) && (userExists.balance < amount)) {
       throw new InsuficientFundsError()
     }
