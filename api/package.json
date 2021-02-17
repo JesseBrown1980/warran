@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest --forceExit",
     "start": "ts-node ./src/index.ts",
-    "build": "tsc"
+    "build": "tsc",
+    "migrate:up": "migrate-mongo up"
   },
   "repository": {
     "type": "git",
