@@ -36,7 +36,7 @@ export class UserDatabase extends BaseDatabase {
   getUserById = async (id: string) => {
     try {
       await this.getConnection()
-      return await UserModel.findById(id).exec()
+      return await UserModel.findById(id, 'name email balance').exec()
     } catch (error) {
       throw new Error(error.message)
     }
