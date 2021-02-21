@@ -41,8 +41,7 @@ Create a Fullstack application that manages a digital wallet
 1. `git clone` to download the repository;
 2. `cd api && npm install && npm run start` to install the backend dependencies;
 3. `cd .. && cd web && npm install && npm run start` to install the front dependencies. For a better experience, use the split terminal
-3. `cd api && npm run start` to run the project locally;
-For running in the Docker: `cd api && docker-compose up` (For the data better experience, use the cloud database)
+
 
 #### 👋🏽 How to reach me
 
