@@ -37,9 +37,8 @@ Create an SPA where users can check their statement and make new transactions su
 
 ## 🖼️ Preview
 
-![Dashboard](https://imgur.com/FkIPpjw)
-![Transaction Modal](https://imgur.com/Pg8gJ8D)
-
+![Dashboard](https://i.imgur.com/FkIPpjw.png)
+![Transaction Modal](https://i.imgur.com/Pg8gJ8D.png)
 
 
 #### 👋🏽 How to reach me
