@@ -11,14 +11,21 @@ const makeUserBusiness = () => {
 
 describe('createUser()', () => {
   test('It should return 400 if there is no email provided ', async () => {
-    const userBusiness = makeUserBusiness()
-    const user: UserInputDTO = {
-      password: '123456',
-      name: 'name',
-      email: ''
+    try {
+      const userBusiness = makeUserBusiness()
+      const user: UserInputDTO = {
+        password: '123456',
+        name: 'name',
+        email: ''
+      }
+      await userBusiness.createUser(user)
+
+    } catch (error) {
+      expect(error.message).toEqual("Invalid param: email")
+
     }
-    const response = await userBusiness.createUser(user)
-    expect(response).toEqual(new InvalidParameterError('email'))
+
+
   });
 
   test('It should return 400 if there is no password provided ', async () => {

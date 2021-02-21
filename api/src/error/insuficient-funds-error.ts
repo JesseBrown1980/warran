@@ -1,6 +1,7 @@
-export class InsuficientFundsError extends Error {
-  constructor() {
-    super('Insuficient Funds')
-    this.name = 'InsuficientFundsError'
+import { BaseError } from "./base-error";
+
+export class InsuficientFundsError extends BaseError {
+  constructor(message = 'Insuficient Funds') {
+    super(message, 400);
   }
 }

@@ -1,6 +1,9 @@
 import { Request, Response } from "express";
 import { WalletBusiness } from "../business";
 import { UserDatabase, WalletDatabase } from "../data";
+import { InvalidParameterError } from "../error";
+import { InsuficientFundsError } from "../error/insuficient-funds-error";
+import { TransactionType } from "../model";
 
 
 export class WalletController {
@@ -18,9 +21,9 @@ export class WalletController {
       const walletBusiness = new WalletBusiness(walletDatabase, userDatabase)
 
       const statement = await walletBusiness.getStatement(user_id, skip, limit, order_by)
-      res.send(statement)
+      res.status(200).send(statement)
     } catch (error) {
-      res.status(400).send({ error: error.message });
+      res.status(400).send(error);
     }
   }
 
@@ -28,6 +31,12 @@ export class WalletController {
     try {
 
       const { amount, category, user_id } = req.body
+
+      const categories = [TransactionType.PAYMENT, TransactionType.WITHDRAWL, TransactionType.DEPOSIT]
+
+      if (categories.indexOf(category) === -1) {
+        res.status(400).send(new InvalidParameterError('category'));
+      }
 
       const walletDatabase = new WalletDatabase()
       const userDatabase = new UserDatabase()
@@ -37,12 +46,9 @@ export class WalletController {
 
       const transaction = await walletBusiness.handleTransaction(parameters)
 
-      if (!transaction) {
-        res.status(400).send({ error: 'Insuficient Funds' });
-      }
-      res.send(transaction)
+      res.status(204).send(transaction)
     } catch (error) {
-      res.status(400).send({ error: error.message });
+      res.status(error.errorCode || 400).send({ message: error.message });
     }
   }
 }
