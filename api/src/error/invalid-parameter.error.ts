@@ -1,6 +1,7 @@
-export class InvalidParameterError extends Error {
+import { BaseError } from "./base-error";
+
+export class InvalidParameterError extends BaseError {
   constructor(paramName: string) {
-    super(`Invalid param: ${paramName}`)
-    this.name = 'InvalidParameterError'
+    super(`Invalid param: ${paramName}`, 400);
   }
 }

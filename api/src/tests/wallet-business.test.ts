@@ -12,24 +12,38 @@ const makeWalletBusiness = () => {
 
 describe('getStatement()', () => {
   test('should return 400 when there is no user id provided', async () => {
-    const userBusiness = makeWalletBusiness()
+    try {
+      const userBusiness = makeWalletBusiness()
 
-    const response = await userBusiness.getStatement('', 1, 1, 1)
-    expect(response).toEqual(new MissingParameterError('user_id'))
+      await userBusiness.getStatement('', 1, 1, 1)
+
+    } catch (error) {
+      expect(error.message).toEqual("Missing param: user_id")
+    }
   });
 
   test('should return 404 when there is no user bound to the id provided', async () => {
-    const userBusiness = makeWalletBusiness()
+    try {
+      const userBusiness = makeWalletBusiness()
 
-    const response = await userBusiness.getStatement('602c80394f7d3e32ec4183aa', 1, 1, 1)
-    expect(response).toEqual(new NotFoundError())
+      await userBusiness.getStatement('60316cd21dafaa5814937b21', 1, 1, 1)
+
+    } catch (error) {
+      expect(error.message).toEqual("Resource not found")
+    }
+
   });
 
-  test('should return 404 when there is no user bound to the id provided', async () => {
-    const userBusiness = makeWalletBusiness()
+  test('should return 400 when the user provided is not valid', async () => {
+    try {
+      const userBusiness = makeWalletBusiness()
 
-    const response = await userBusiness.getStatement('invalid_id', 1, 1, 1)
-    expect(response).toEqual(new InvalidParameterError('user_id'))
+      await userBusiness.getStatement('invalid_id', 1, 1, 1)
+    } catch (error) {
+      expect(error.message).toEqual("Invalid param: user_id")
+
+    }
+
   });
 });
 
@@ -38,29 +52,36 @@ describe('handleTransaction()', () => {
     try {
       const userBusiness = makeWalletBusiness()
 
-      await userBusiness.handleTransaction({ amount: -1, category: 'payment', user_id: '602c80394f7d3e32ec4183aa' })
+      await userBusiness.handleTransaction({ amount: -1, category: 'payment', user_id: '602c982bba4ca81124ae0b2b' })
 
     } catch (error) {
-      expect(error).toEqual(new InvalidParameterError('amount'))
+      expect(error.message).toEqual("Invalid param: amount")
     }
   });
 
   test('should return 404 when there is no user bound to the id provided', async () => {
-    const userBusiness = makeWalletBusiness()
+    try {
+      const userBusiness = makeWalletBusiness()
 
-    const response = await userBusiness.handleTransaction({ amount: 100, category: 'payment', user_id: '602c80394f7d3e32ec4183aa' })
-    expect(response).toEqual(new NotFoundError())
+      await userBusiness.handleTransaction({ amount: 100, category: 'payment', user_id: '60316cd21dafaa5814937b20' })
+
+    } catch (error) {
+      expect(error.message).toEqual("Resource not found")
+
+    }
+
+
   });
 
   test('should return 400 when the transaction category provided is different from payment. deposit or withdrawl', async () => {
     try {
       const userBusiness = makeWalletBusiness()
 
-      await userBusiness.handleTransaction({ amount: 100, category: 'invalid_category', user_id: '602c80394f7d3e32ec4183aa' })
-      
+      await userBusiness.handleTransaction({ amount: 100, category: 'invalid_category', user_id: '602c982bba4ca81124ae0b2b' })
+
 
     } catch (error) {
-      expect(error).toEqual(new InvalidParameterError('category'))
+      expect(error.message).toEqual("Invalid param: category")
     }
 
   });
@@ -73,7 +94,7 @@ describe('handleTransaction()', () => {
 
 
     } catch (error) {
-      expect(error).toEqual(new InsuficientFundsError())
+      expect(error.message).toEqual("Insuficient funds")
     }
 
   });

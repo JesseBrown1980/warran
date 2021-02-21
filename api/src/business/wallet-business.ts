@@ -19,19 +19,19 @@ export class WalletBusiness {
   async getStatement(user_id: string, skip: number, limit: number, order_by: number) {
 
     if (!user_id) {
-      return new MissingParameterError('user_id')
+      throw new MissingParameterError('user_id')
     }
 
     const validId = idIsValid(user_id)
 
     if (!validId) {
-      return new InvalidParameterError('user_id')
+      throw new InvalidParameterError('user_id')
     }
 
     const userExists = await this.userDatabase.getUserById(user_id)
 
     if (!userExists) {
-      return new NotFoundError()
+      throw new NotFoundError()
     }
 
     const wallet = await this.walletDatabase.getStatement(user_id, skip, limit, order_by)
@@ -39,13 +39,12 @@ export class WalletBusiness {
   }
 
   async handleTransaction(parameters: any) {
-
     const { amount, category, user_id } = parameters
 
     const requiredFields = ['amount', 'category', 'user_id']
     for (const field of requiredFields) {
       if (!parameters[field]) {
-        return new MissingParameterError(field)
+        throw new MissingParameterError(field)
       }
     }
 
@@ -56,23 +55,13 @@ export class WalletBusiness {
     const validId = idIsValid(user_id)
 
     if (!validId) {
-      return new InvalidParameterError('user_id')
+      throw new InvalidParameterError('user_id')
     }
 
     const userExists: any = await this.userDatabase.getUserById(user_id)
 
     if (!userExists) {
-      return new NotFoundError()
-    }
-
-    const categories = [TransactionType.PAYMENT, TransactionType.WITHDRAWL, TransactionType.DEPOSIT]
-
-    if (categories.indexOf(category) < 1) {
-      return new InvalidParameterError('category')
-    }
-
-    if ((category === TransactionType.PAYMENT || category === TransactionType.WITHDRAWL) && (userExists.balance < amount)) {
-      throw new InsuficientFundsError()
+      throw new NotFoundError()
     }
 
     const amountToTransaction = category === "withdrawl" || category === "payment" ? amount * -1 : amount
@@ -81,8 +70,5 @@ export class WalletBusiness {
 
     await this.userDatabase.updateBalance(user_id, newBalance)
     await this.walletDatabase.saveTransaction(user_id, amount, category)
-
-    return noContent()
   }
-
 }

@@ -18,7 +18,7 @@ export class UserBusiness {
     const validEmail: boolean = emailIsValid(email)
 
     if (!validEmail) {
-      return new InvalidParameterError("email")
+      throw new InvalidParameterError("email")
     }
 
     const newUser = await this.userDatabase.createUser(name, password, email)
@@ -36,7 +36,6 @@ export class UserBusiness {
     const validId = idIsValid(id)
 
     if (!validId) {
-
       throw new InvalidParameterError('id')
     }
 

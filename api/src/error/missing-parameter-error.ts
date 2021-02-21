@@ -1,6 +1,8 @@
-export class MissingParameterError extends Error {
+import { BaseError } from "./base-error";
+
+export class MissingParameterError extends BaseError {
   constructor(paramName: string) {
-    super(`Missing param: ${paramName}`)
-    this.name = 'MissingParamError'
+    super(`Missing param: ${paramName}`, 400);
   }
 }
+
