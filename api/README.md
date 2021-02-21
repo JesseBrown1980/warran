@@ -27,6 +27,7 @@ Create an API that process deposits, payments and withdrawls
 - Make a withdrawl
 
 - `TODO` Monetize the balance
+- `TODO` Add transactions seed
 
 ## 🚙 How to run this application
 
