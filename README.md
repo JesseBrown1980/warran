@@ -31,7 +31,7 @@ Create a Fullstack application that manages a digital wallet
 - `TODO` Monetize the balance
 - `TODO` Filters in user statement
 - `TODO` Use the backend ready pagination in the frontend
-- 
+
 #### 👋🏽 How to reach me
 
 Lourenço Passos | Fullstack Software Engineer | lo.passos93@gmail.com | 55-51-996106010
