@@ -40,7 +40,8 @@ Create a Fullstack application that manages a digital wallet
 
 1. `git clone` to download the repository;
 2. `cd api && npm install && npm run start` to install the backend dependencies;
-3. `cd .. && cd web && npm install && npm run start` to install the front dependencies. For a better experience, use the split terminal
+3. ` .env ` add .env file to each repo with the information of .env.example if there is no .env already;
+4. `cd .. && cd web && npm install && npm run start` to install the front dependencies. For a better experience, use the split terminal
 
 
 #### 👋🏽 How to reach me
